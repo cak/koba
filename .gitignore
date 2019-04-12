@@ -1,0 +1,4 @@
+.build/*
+.DS_Store
+/Koba.xcodeproj
+/Package.resolved
