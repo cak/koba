@@ -15,36 +15,36 @@ You can assess the security of your HTTP response headers at  [securityheaders.c
 *Recommendations used by Koba and more information regarding security headers can be found at the [OWASP Secure Headers Project](https://www.owasp.org/index.php/OWASP_Secure_Headers_Project) and [Mozilla Web Security](https://infosec.mozilla.org/guidelines/web_security)*
 
 ### Cache-control
-Prevent cacheable HTTPS response. 
-*Default Value:* no-cache, no-store, must-revalidate, max-age=0
+Prevent cacheable HTTPS response  
+*Default Value:* `no-cache, no-store, must-revalidate, max-age=0`
 
 ### Content-Security-Policy (CSP)
 Prevent cross-site injections  
-*Default Value:* script-src 'self'; object-src 'self' *(not included by default)*
+*Default Value:* `script-src 'self'; object-src 'self'` *(not included by default)*
 
 ### Feature-Policy
 Disable browser features and APIs  
-*Default Value:* accelerometer 'none'; ambient-light-sensor 'none'; autoplay 'none'; camera 'none'; encrypted-media 'none'; fullscreen 'none'; geolocation 'none'; gyroscope 'none'; magnetometer 'none'; microphone 'none'; midi 'none'; payment 'none'; picture-in-picture 'none'; speaker 'none'; sync-xhr 'none'; usb 'none'; vr 'none'; *(not included by default)*
+*Default Value:* `accelerometer 'none'; ambient-light-sensor 'none'; autoplay 'none'; camera 'none'; encrypted-media 'none'; fullscreen 'none'; geolocation 'none'; gyroscope 'none'; magnetometer 'none'; microphone 'none'; midi 'none'; payment 'none'; picture-in-picture 'none'; speaker 'none'; sync-xhr 'none'; usb 'none'; vr 'none'` *(not included by default)*
 
 ### Strict-Transport-Security (HSTS)
 Ensure application communication is sent over HTTPS  
-*Default Value:* max-age=63072000; includeSubdomains
+*Default Value:* `max-age=63072000` includeSubdomains
 
 ### Referrer-Policy
 Enable full referrer if same origin, remove path for cross origin and disable referrer in unsupported browsers  
-*Default Value:* no-referrer, strict-origin-when-cross-origin
+*Default Value:* `no-referrer, strict-origin-when-cross-origin`
 
 ### X-Content-Type-Options (XCTO)
 Prevent MIME-sniffing  
-*Default Value:* nosniff
+*Default Value:* `nosniff`
 
 ### X-Frame-Options (XFO)
 Disable framing from different origins (clickjacking defense)  
-*Default Value:* SAMEORIGIN
+*Default Value:* `SAMEORIGIN`
 
 ### X-XSS-Protection (XXP)
 Enable browser cross-site scripting filters  
-*Default Value:* 1; mode=block
+*Default Value:* `1; mode=block`
 
 #### Important information
 * 	The **Strict-Transport-Security (HSTS)** header will tell the browser to *only* utilize secure HTTPS connections for the domain, and in the default configuration, including all subdomains. The HSTS header requires trusted certificates and users will unable to connect to the site if using self-signed or expired certificates. The browser will honor the HSTS header for the time directed in the max-age attribute *(default = 2 years)*, and setting the max-age to 0 will disable an already set HSTS header. Use `hsts: nil` in the KobaConfig to not include the HSTS header.
@@ -89,7 +89,6 @@ router.all(middleware: koba)
 
 ```HTTP
 X-Content-Type-Options: nosniff
-Content-Type: text/html
 X-XSS-Protection: 1; mode=block
 Referrer-Policy: no-referrer, strict-origin-when-cross-origin
 X-Frame-Options: SAMEORIGIN
@@ -123,9 +122,9 @@ let config = KobaConfig(
     csp: CSP()
         .defaultSrc(Sources.none)
         .blockAllMixedContent()
-        .connectSrc(Sources.sameOrigin, "api.spam.com"),
+        .connectSrc(Sources.sameOrigin, "api.serverswift.dev"),
     featurePolicy: FeaturePolicy()
-        .geolocation(Sources.sameOrigin, "spam.com")
+        .geolocation(Sources.sameOrigin, "serverswift.dev")
         .vibrate(Sources.none),
     hsts: HSTS()
         .includeSubdomains()
@@ -147,171 +146,111 @@ router.all(middleware: koba)
 ```
 
 ```HTTP
-Strict-Transport-Security: includeSubDomains; preload; max-age=2592000
+Content-Security-Policy: default-src 'none'; block-all-mixed-content; connect-src 'self' api.serverswift.dev
 Cache-control: no-store, must-revalidate, proxy-revalidate
-Content-Security-Policy: default-src 'none'; block-all-mixed-content; connect-src 'self' api.spam.com
-X-XSS-Protection: 1 mode=block
-Content-Type: text/html
-Content-Length: 2749
-X-Frame-Options: DENY
-Feature-Policy: geolocation 'self' spam.com; vibrate 'none'
+Strict-Transport-Security: includeSubDomains; preload; max-age=604800
 Referrer-Policy: no-referrer
+X-XSS-Protection: 1 mode=block
+X-Frame-Options: DENY
+Feature-Policy: geolocation 'self' serverswift.dev; vibrate 'none'
 ```
 
 ## Policy Builder
 
-### Sources
+### Helpers
 
-* data = "data:"
-* none = "'none'"
-* sameOrigin = "'self'"
-* src = "'src'"
-* strictDynamic = "'strict-dynamic'"
-* unsafeEval = "'unsafe-eval'"
-* unsafeInline = "'unsafe-inline'"
-* wildcard = "*"
+#### Sources
 
-### Seconds
+* data - data:
+* none - 'none'
+* sameOrigin - 'self'
+* src - 'src'
+* strictDynamic - 'strict-dynamic'
+* unsafeEval - 'unsafe-eval'
+* unsafeInline - 'unsafe-inline'
+* wildcard - *
 
-* fiveMinutes = "300"
-* oneWeek = "2592000"
-* oneYear = "31536000"
-* twoYears = "63072000"
+#### Seconds
+
+* fiveMinutes - 300
+* oneDay - 86400
+* oneWeek - 604800
+* oneMonth - 2592000
+* oneYear - 31536000
+* twoYears - 63072000
+
+*Example*
+
+```swift
+let config = KobaConfig(
+    csp: CSP().defaultSrc(Sources.sameOrigin),
+    hsts: HSTS().maxAge(Seconds.oneDay)
+)
+
+let koba = Koba(config: config)
+```
+
+```HTTP
+Content-Security-Policy: default-src 'self'
+Strict-Transport-Security: max-age=86400
+```
 
 ### CacheControl()
 
-**Directives:**
+* default() - *script-src 'self'; object-src 'self'*
+* set(value) - *custom value*
 
-*  default() - no-cache, no-store, must-revalidate, max-age=0
-*  private()
-*  public()
-*  immutable()
-*  maxAge(seconds)
-*  maxStale(seconds)
-*  minFresh(seconds)
-*  mustRevalidate()
-*  noCache()
-*  noStore()
-*  noTransform()
-*  onlyIfCached()
-*  proxyRevalidate()
-*  set(value)
-*  sMaxage(seconds)
-*  staleIfError(seconds)
-*  staleWhileRevalidate(seconds)
+**Directives:** private(), public(), immutable(), maxAge(seconds), maxStale(seconds), minFresh(seconds), mustRevalidate(), noCache(), noStore(), noTransform(), onlyIfCached(), proxyRevalidate(), sMaxage(seconds), staleIfError(seconds), staleWhileRevalidate(seconds)
 
 ### CSP()  
 
-**Directives:**
+* default() - *script-src 'self'; object-src 'self'*
+* set(value) - *custom value*
 
-* default() - script-src 'self'; object-src 'self'
-* baseUri(sources)
-* blockAllMixedContent()
-* connectSrc(sources)
-* defaultSrc(sources)
-* fontSrc(sources)
-* formAction(sources)
-* frameAncestors(sources)
-* frameSrc(sources)
-* imgSrc(sources)
-* manifestSrc(sources)
-* mediaSrc(sources)
-* objectSrc(sources)
-* pluginTypes(types)
-* reportTo(ReportTo)
-* reportUri(uri)
-* requireSriFor(values)
-* sandbox(values)
-* scriptSrc(sources)
-* set(value)
-* styleSrc(sources)
-* upgradeInsecureRequests()
-* workerSrc(sources)
+**Directives:** baseUri(sources), blockAllMixedContent(), connectSrc(sources), defaultSrc(sources), fontSrc(sources), formAction(sources), frameAncestors(sources), frameSrc(sources), imgSrc(sources), manifestSrc(sources), mediaSrc(sources), objectSrc(sources), pluginTypes(types), reportTo(ReportTo), reportUri(uri), requireSriFor(values), sandbox(values), scriptSrc(sources), styleSrc(sources), upgradeInsecureRequests(), workerSrc(sources)
 
 You can check the effectiveness of your CSP Policy at the
 [CSP Evaluator](https://csp-evaluator.withgoogle.com/)
 
 ### FeaturePolicy()  
 
-**Directives:**
+* default() - *accelerometer 'none'; ambient-light-sensor 'none'; autoplay 'none'; camera 'none'; encrypted-media 'none'; fullscreen 'none'; geolocation 'none'; gyroscope 'none'; magnetometer 'none'; microphone 'none'; midi 'none'; payment 'none'; picture-in-picture 'none'; speaker 'none'; sync-xhr 'none'; usb 'none'; vr 'none';*
+* set(value) - *custom value*
 
-* default() - accelerometer 'none'; ambient-light-sensor 'none'; autoplay 'none'; camera 'none'; encrypted-media 'none'; fullscreen 'none'; geolocation 'none'; gyroscope 'none'; magnetometer 'none'; microphone 'none'; midi 'none'; payment 'none'; picture-in-picture 'none'; speaker 'none'; sync-xhr 'none'; usb 'none'; vr 'none';
-* accelerometer(allowlist)
-* ambientLightSensor(allowlist)
-* autoplay(allowlist)
-* camera(allowlist)
-* documentDomain(allowlist)
-* encryptedMedia(allowlist)
-* fullscreen(allowlist)
-* geolocation(allowlist)
-* gyroscope(allowlist)
-* magnetometer(allowlist)
-* microphone(allowlist)
-* midi(allowlist)
-* payment(allowlist)
-* pictureInPicture(allowlist)
-* set(value)
-* speaker(allowlist)
-* syncXhr(allowlist)
-* usb(allowlist)
-* vibrate(allowlist)
-* vr(allowlist)
+**Directives:** accelerometer(allowlist), ambientLightSensor(allowlist), autoplay(allowlist), camera(allowlist), documentDomain(allowlist), encryptedMedia(allowlist), fullscreen(allowlist), geolocation(allowlist), gyroscope(allowlist), magnetometer(allowlist), microphone(allowlist), midi(allowlist), payment(allowlist), pictureInPicture(allowlist), speaker(allowlist), syncXhr(allowlist), usb(allowlist), vibrate(allowlist), vr(allowlist)
 
 ### HSTS()  
 
-**Directives:**
+* default() - *max-age=63072000; includeSubdomains*
+* set(value) - *custom value*
 
-* default() - max-age=63072000; includeSubdomains
-* includeSubdomains()
-* maxAge(seconds)
-* preload()
-* set(value)
+**Directives:** includeSubdomains(), maxAge(seconds), preload()
 
 ### ReferrerPolicy()  
 
-**Directives:**
+* default() - *no-referrer, strict-origin-when-cross-origin*
+* set(value) - *custom value*
 
-* default() - no-referrer, strict-origin-when-cross-origin
-* noReferrer()
-* noReferrerWhenDowngrade()
-* origin()
-* originWhenCrossOrigin()
-* sameOrigin()
-* set(value)
-* strictOrigin()
-* strictOriginWhenCrossOrigin()
-* unsafeUrl()
+**Directives:**, noReferrer(), noReferrerWhenDowngrade(), origin(), originWhenCrossOrigin(), sameOrigin(), strictOrigin(), strictOriginWhenCrossOrigin(), unsafeUrl()
 
 ### XCTO()  
 
-**Directives:**
-
-* default() - nosniff
-* set(value)
-
+* default() - *nosniff*
+* set(value) - *custom value*
 
 ### XFO()
 
-**Directives:**
+* default() - *SAMEORIGIN*
+* set(value) - *custom value*
 
-* default() - SAMEORIGIN
-* allowFrom()
-* deny()
-* sameorigin()
-* set(value)
-
+**Directives:** allowFrom(), deny(), sameorigin()
 
 ### XXP()
 
-**Directives:**
+* default() - *1; mode=block*
+* set(value) - *custom value*
 
-* default() - 1; mode=block
-* disabled()
-* enabled()
-* enabledBlock()
-* enabledReport(uri)
-* set(value)
-
+**Directives:** disabled(), enabled(), enabledBlock(), enabledReport(uri)
 
 ## Resources:
 
