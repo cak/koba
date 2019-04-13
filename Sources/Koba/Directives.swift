@@ -241,7 +241,7 @@ public class FeaturePolicy {
             + "camera 'none'; encrypted-media 'none'; fullscreen 'none'; geolocation 'none'; "
             + "gyroscope 'none'; magnetometer 'none'; microphone 'none'; midi 'none'; "
             + "payment 'none'; picture-in-picture 'none'; speaker 'none'; sync-xhr 'none'; "
-            + "usb 'none'; vr 'none';")
+            + "usb 'none'; vr 'none'")
         return self
     }
 
@@ -455,8 +455,7 @@ public class XCTO {
         return self
     }
 
-        public init() {}
-
+    public init() {}
 }
 
 public class XFO {
