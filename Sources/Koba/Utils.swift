@@ -41,10 +41,12 @@ public struct Sources {
 }
 
 public struct Seconds {
-    public static let fiveMinutes = "300"
-    public static let oneWeek = "2592000"
-    public static let oneYear = "31536000"
-    public static let twoYears = "63072000"
+    public static let fiveMinutes = "\(60 * 5)"
+    public static let oneDay = "\(60 * 60 * 24)"
+    public static let oneWeek = "\(60 * 60 * 24 * 7)"
+    public static let oneMonth = "\(60 * 60 * 24 * 30)"
+    public static let oneYear = "\(60 * 60 * 24 * 365)"
+    public static let twoYears = "\(60 * 60 * 24 * 365 * 2)"
 }
 
 public struct ReportTo: Codable {
