@@ -1,10 +1,6 @@
 # Koba
 
-Security Headers for [Kitura](https://www.kitura.io) 
-
-*Kob'a (ko'-bah) is the Hebrew word for helmet, a nod to [Helmet.js](https://helmetjs.github.io/).* 
-
-Looking for security headers for Vapor? Check out [Vapor Security Headers](https://github.com/brokenhandsio/VaporSecurityHeaders).
+Koba is a [Kitura](https://www.kitura.io) middleware for setting HTTP security headers to help mitigate vulnerabilities and protect against attackers. It contains a strict default configuration and a policy builder for designing and overriding security header values. 
 
 ## Secure Headers
 
@@ -251,6 +247,16 @@ You can check the effectiveness of your CSP Policy at the
 * set(value) - *custom value*
 
 **Directives:** disabled(), enabled(), enabledBlock(), enabledReport(uri)
+
+## Contributing
+	
+Send a pull request, create an issue or discuss with me (@cak) on the the [Kitura Slack](http://slack.kitura.io/).
+
+## Miscellaneous
+
+*Kob'a (ko'-bah) is the Hebrew word for helmet, a nod to [Helmet.js](https://helmetjs.github.io/).* 
+
+Looking for security headers for Vapor? Check out [Vapor Security Headers](https://github.com/brokenhandsio/VaporSecurityHeaders).
 
 ## Resources:
 
