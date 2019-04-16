@@ -155,32 +155,36 @@ Feature-Policy: geolocation 'self' serverswift.dev; vibrate 'none'
 
 ### Helpers
 
-#### Sources
+#### Koba.Source
 
-* data - data:
-* none - 'none'
-* sameOrigin - 'self'
-* src - 'src'
-* strictDynamic - 'strict-dynamic'
-* unsafeEval - 'unsafe-eval'
-* unsafeInline - 'unsafe-inline'
-* wildcard - *
+* data - `data:`
+* mediastream - `mediastream:`
+* https - `https:`
+* blob - `blob:`
+* filesystem - `filesystem:`
+* none - `'none'`
+* sameOrigin - `'self'`
+* src - `'src'`
+* strictDynamic - `'strict-dynamic'`
+* unsafeEval - `'unsafe-eval'`
+* unsafeInline - `'unsafe-inline'`
+* wildcard - `*`
 
-#### Seconds
+#### Koba.Time
 
-* fiveMinutes - 300
-* oneDay - 86400
-* oneWeek - 604800
-* oneMonth - 2592000
-* oneYear - 31536000
-* twoYears - 63072000
+* fiveMinutes - `300`
+* oneDay - `86400`
+* oneWeek - `604800`
+* oneMonth - `2592000`
+* oneYear - `31536000`
+* twoYears - `63072000`
 
 *Example*
 
 ```swift
 let config = KobaConfig(
-    csp: CSP().defaultSrc(Sources.sameOrigin),
-    hsts: HSTS().maxAge(Seconds.oneDay)
+    csp: CSP().defaultSrc(Koba.Source.sameOrigin),
+    hsts: HSTS().maxAge(Koba.Time.oneDay)
 )
 
 let koba = Koba(config: config)
@@ -194,14 +198,15 @@ Strict-Transport-Security: max-age=86400
 ### CacheControl()
 
 * default() - *script-src 'self'; object-src 'self'*
-* set(value) - *custom value*
+* custom(value) - *custom value*
 
 **Directives:** private(), public(), immutable(), maxAge(seconds), maxStale(seconds), minFresh(seconds), mustRevalidate(), noCache(), noStore(), noTransform(), onlyIfCached(), proxyRevalidate(), sMaxage(seconds), staleIfError(seconds), staleWhileRevalidate(seconds)
 
 ### CSP()  
 
 * default() - *script-src 'self'; object-src 'self'*
-* set(value) - *custom value*
+* custom(value) - *custom value*
+* reportOnly() - *change header to Content-Security-Policy-Report-Only*
 
 **Directives:** baseUri(sources), blockAllMixedContent(), connectSrc(sources), defaultSrc(sources), fontSrc(sources), formAction(sources), frameAncestors(sources), frameSrc(sources), imgSrc(sources), manifestSrc(sources), mediaSrc(sources), objectSrc(sources), pluginTypes(types), reportTo(ReportTo), reportUri(uri), requireSriFor(values), sandbox(values), scriptSrc(sources), styleSrc(sources), upgradeInsecureRequests(), workerSrc(sources)
 
@@ -211,40 +216,40 @@ You can check the effectiveness of your CSP Policy at the
 ### FeaturePolicy()  
 
 * default() - *accelerometer 'none'; ambient-light-sensor 'none'; autoplay 'none'; camera 'none'; encrypted-media 'none'; fullscreen 'none'; geolocation 'none'; gyroscope 'none'; magnetometer 'none'; microphone 'none'; midi 'none'; payment 'none'; picture-in-picture 'none'; speaker 'none'; sync-xhr 'none'; usb 'none'; vr 'none';*
-* set(value) - *custom value*
+* custom(value) - *custom value*
 
 **Directives:** accelerometer(allowlist), ambientLightSensor(allowlist), autoplay(allowlist), camera(allowlist), documentDomain(allowlist), encryptedMedia(allowlist), fullscreen(allowlist), geolocation(allowlist), gyroscope(allowlist), magnetometer(allowlist), microphone(allowlist), midi(allowlist), payment(allowlist), pictureInPicture(allowlist), speaker(allowlist), syncXhr(allowlist), usb(allowlist), vibrate(allowlist), vr(allowlist)
 
 ### HSTS()  
 
 * default() - *max-age=63072000; includeSubdomains*
-* set(value) - *custom value*
+* custom(value) - *custom value*
 
 **Directives:** includeSubdomains(), maxAge(seconds), preload()
 
 ### ReferrerPolicy()  
 
 * default() - *no-referrer, strict-origin-when-cross-origin*
-* set(value) - *custom value*
+* custom(value) - *custom value*
 
 **Directives:**, noReferrer(), noReferrerWhenDowngrade(), origin(), originWhenCrossOrigin(), sameOrigin(), strictOrigin(), strictOriginWhenCrossOrigin(), unsafeUrl()
 
 ### XCTO()  
 
 * default() - *nosniff*
-* set(value) - *custom value*
+* custom(value) - *custom value*
 
 ### XFO()
 
 * default() - *SAMEORIGIN*
-* set(value) - *custom value*
+* custom(value) - *custom value*
 
 **Directives:** allowFrom(), deny(), sameorigin()
 
 ### XXP()
 
 * default() - *1; mode=block*
-* set(value) - *custom value*
+* custom(value) - *custom value*
 
 **Directives:** disabled(), enabled(), enabledBlock(), enabledReport(uri)
 
