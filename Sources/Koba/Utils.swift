@@ -46,12 +46,12 @@ extension Koba {
     }
 
     public struct Time {
-        public static let fiveMinutes = "\(60 * 5)"
-        public static let oneDay = "\(60 * 60 * 24)"
-        public static let oneWeek = "\(60 * 60 * 24 * 7)"
-        public static let oneMonth = "\(60 * 60 * 24 * 30)"
-        public static let oneYear = "\(60 * 60 * 24 * 365)"
-        public static let twoYears = "\(60 * 60 * 24 * 365 * 2)"
+        public static let fiveMinutes = 60 * 5
+        public static let oneDay = 60 * 60 * 24
+        public static let oneWeek = 60 * 60 * 24 * 7
+        public static let oneMonth = 60 * 60 * 24 * 30
+        public static let oneYear = 60 * 60 * 24 * 365
+        public static let twoYears = 60 * 60 * 24 * 365 * 2
     }
 }
 

@@ -22,17 +22,17 @@ public class CacheControl {
         return self
     }
 
-    public func maxAge(_ seconds: String) -> CacheControl {
+    public func maxAge(_ seconds: Int) -> CacheControl {
         directives.append("max-age=\(seconds)")
         return self
     }
 
-    public func maxStale(_ seconds: String) -> CacheControl {
+    public func maxStale(_ seconds: Int) -> CacheControl {
         directives.append("max-stale=\(seconds)")
         return self
     }
 
-    public func minFresh(_ seconds: String) -> CacheControl {
+    public func minFresh(_ seconds: Int) -> CacheControl {
         directives.append("min-fresh=\(seconds)")
         return self
     }
@@ -77,17 +77,17 @@ public class CacheControl {
         return self
     }
 
-    public func sMaxage(_ seconds: String) -> CacheControl {
+    public func sMaxage(_ seconds: Int) -> CacheControl {
         directives.append("s-maxage=\(seconds)")
         return self
     }
 
-    public func staleIfError(_ seconds: String) -> CacheControl {
+    public func staleIfError(_ seconds: Int) -> CacheControl {
         directives.append("stale-if-error=\(seconds)")
         return self
     }
 
-    public func staleWhileRevalidate(_ seconds: String) -> CacheControl {
+    public func staleWhileRevalidate(_ seconds: Int) -> CacheControl {
         directives.append("stale-while-revalidate=\(seconds)")
         return self
     }
@@ -371,7 +371,7 @@ public class HSTS {
         return self
     }
 
-    public func maxAge(_ seconds: String) -> HSTS {
+    public func maxAge(_ seconds: Int) -> HSTS {
         directives.append("max-age=\(seconds)")
         return self
     }
