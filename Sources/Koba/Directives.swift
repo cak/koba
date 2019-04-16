@@ -97,9 +97,15 @@ public class CacheControl {
 
 public class CSP {
     private var directives: [String] = []
+    var reportOnlyFlag = false
 
     var value: String {
         return directives.joined(separator: "; ")
+    }
+
+    public func reportOnly() -> CSP {
+        reportOnlyFlag = true
+        return self
     }
 
     public func custom(_ value: String) -> CSP {

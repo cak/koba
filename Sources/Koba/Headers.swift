@@ -13,7 +13,11 @@ public class Koba: RouterMiddleware {
             response.headers.append("Cache-control", value: cacheControl.value)
         }
         if let csp = config.csp {
-            response.headers.append("Content-Security-Policy", value: csp.value)
+            if csp.reportOnlyFlag {
+                response.headers.append("Content-Security-Policy-Report-Only", value: csp.value)
+            } else {
+                response.headers.append("Content-Security-Policy", value: csp.value)
+            }
         }
         if let featurePolicy = config.featurePolicy {
             response.headers.append("Feature-Policy", value: featurePolicy.value)
