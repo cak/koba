@@ -7,7 +7,7 @@ public class CacheControl {
         return directives.joined(separator: ", ")
     }
 
-    public func set(_ value: String) -> CacheControl {
+    public func custom(_ value: String) -> CacheControl {
         directives.append(value)
         return self
     }
@@ -102,7 +102,7 @@ public class CSP {
         return directives.joined(separator: "; ")
     }
 
-    public func set(_ value: String) -> CSP {
+    public func custom(_ value: String) -> CSP {
         directives.append(value)
         return self
     }
@@ -231,7 +231,7 @@ public class FeaturePolicy {
         return directives.joined(separator: "; ")
     }
 
-    public func set(_ value: String) -> FeaturePolicy {
+    public func custom(_ value: String) -> FeaturePolicy {
         directives.append(value)
         return self
     }
@@ -350,7 +350,7 @@ public class HSTS {
         return directives.joined(separator: "; ")
     }
 
-    public func set(_ value: String) -> HSTS {
+    public func custom(_ value: String) -> HSTS {
         directives.append(value)
         return self
     }
@@ -385,7 +385,7 @@ public class ReferrerPolicy {
         return directives.joined(separator: ", ")
     }
 
-    public func set(_ value: String) -> ReferrerPolicy {
+    public func custom(_ value: String) -> ReferrerPolicy {
         directives.append(value)
         return self
     }
@@ -445,7 +445,7 @@ public class XCTO {
         return directive
     }
 
-    public func set(_ value: String) -> XCTO {
+    public func custom(_ value: String) -> XCTO {
         directive = value
         return self
     }
@@ -465,7 +465,7 @@ public class XFO {
         return directive
     }
 
-    public func set(_ value: String) -> XFO {
+    public func custom(_ value: String) -> XFO {
         directive = value
         return self
     }
@@ -500,7 +500,7 @@ public class XXP {
         return directive
     }
 
-    public func set(_ value: String) -> XXP {
+    public func custom(_ value: String) -> XXP {
         directive = value
         return self
     }
