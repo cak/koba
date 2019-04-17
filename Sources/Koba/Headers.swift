@@ -19,6 +19,9 @@ public class Koba: RouterMiddleware {
                 response.headers.append("Content-Security-Policy", value: csp.value)
             }
         }
+        if let expectCT = config.expectCT {
+            response.headers.append("Expect-CT", value: expectCT.value)
+        }
         if let featurePolicy = config.featurePolicy {
             response.headers.append("Feature-Policy", value: featurePolicy.value)
         }

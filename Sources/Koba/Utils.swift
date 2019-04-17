@@ -1,6 +1,7 @@
 public struct KobaConfig {
     public var cacheControl: CacheControl?
     public var csp: CSP?
+    public var expectCT: ExpectCT?
     public var featurePolicy: FeaturePolicy?
     public var hsts: HSTS?
     public var referrerPolicy: ReferrerPolicy?
@@ -11,6 +12,7 @@ public struct KobaConfig {
     public init(
         cacheControl: CacheControl? = CacheControl().default(),
         csp: CSP? = nil,
+        expectCT: ExpectCT? = nil,
         featurePolicy: FeaturePolicy? = nil,
         hsts: HSTS? = HSTS().default(),
         referrerPolicy: ReferrerPolicy? = ReferrerPolicy().default(),
@@ -20,6 +22,7 @@ public struct KobaConfig {
     ) {
         self.cacheControl = cacheControl
         self.csp = csp
+        self.expectCT = expectCT
         self.featurePolicy = featurePolicy
         self.hsts = hsts
         self.referrerPolicy = referrerPolicy

@@ -230,6 +230,41 @@ public class CSP {
     public init() {}
 }
 
+public class ExpectCT {
+    private var directives: [String] = []
+
+    var value: String {
+        return directives.joined(separator: "; ")
+    }
+
+    public func custom(_ value: String) -> ExpectCT {
+        directives.append(value)
+        return self
+    }
+
+    public func `default`() -> ExpectCT {
+        directives.append("max-age=0")
+        return self
+    }
+
+    public func maxAge(_ seconds: Int) -> ExpectCT {
+        directives.append("max-age=\(seconds)")
+        return self
+    }
+
+    public func enforce() -> ExpectCT {
+        directives.append("enforce")
+        return self
+    }
+
+    public func reportUri(_ uri: String) -> ExpectCT {
+        directives.append("report-uri=\"\(uri)\"")
+        return self
+    }
+
+    public init() {}
+}
+
 public class FeaturePolicy {
     private var directives: [String] = []
 
