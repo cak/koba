@@ -188,12 +188,16 @@ public class CSP {
         return self
     }
 
-    public func reportTo(_ reportTo: ReportTo) -> CSP {
-        let encoder = JSONEncoder()
-        encoder.keyEncodingStrategy = .convertToSnakeCase
-        guard let data = try? encoder.encode(reportTo) else { return self }
-        guard let jsonString = String(data: data, encoding: .utf8) else { return self }
-        directives.append("report-to \(String(describing: jsonString))")
+    public func reportTo(_ reportTo: ReportTo...) -> CSP {
+        var reporting: [String] = []
+        _ = reportTo.map { report in
+            let encoder = JSONEncoder()
+            encoder.keyEncodingStrategy = .convertToSnakeCase
+            guard let reportTodata = try? encoder.encode(report) else { return }
+            guard let reportToString = String(data: reportTodata, encoding: .utf8) else { return }
+            reporting.append(String(describing: reportToString))
+        }
+        directives.append("report-to \(reporting.joined(separator: ", "))")
         return self
     }
 
