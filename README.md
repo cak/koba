@@ -28,7 +28,7 @@ Disable browser features and APIs
 
 ### Strict-Transport-Security (HSTS)
 Ensure application communication is sent over HTTPS  
-*Default Value:* `max-age=63072000` includeSubdomains
+*Default Value:* `max-age=86400; includeSubDomains`
 
 ### Referrer-Policy
 Enable full referrer if same origin, remove path for cross origin and disable referrer in unsupported browsers  
@@ -73,7 +73,7 @@ import Koba
 ```
 
 
-*Default configuration*
+*Default configuration:*
 
 ```swift
 import Kitura
@@ -124,7 +124,9 @@ let config = KobaConfig(
                 .defaultSrc(Koba.Source.none)
                 .blockAllMixedContent()
                 .connectSrc(Koba.Source.sameOrigin, "api.swiftserver.dev"),
-            expectCT: ExpectCT().maxAge(Koba.Time.fiveMinutes).enforce(),
+            expectCT: ExpectCT()
+	            .maxAge(Koba.Time.fiveMinutes)
+	            .enforce(),
             featurePolicy: FeaturePolicy()
                 .geolocation(Koba.Source.sameOrigin, "swiftserver.dev")
                 .vibrate(Koba.Source.none),
@@ -356,14 +358,14 @@ let policy = FeaturePolicy()
 
 ```swift
 let policy = HSTS()
+		.maxAge(Koba.Time.oneMonth)
     .includeSubdomains()
     .preload()
-    .maxAge(Koba.Time.oneMonth)
 
-// includeSubDomains; preload; max-age=2592000
+// max-age=2592000; includeSubDomains; preload
 ```
 
-***Resources:**  [Strict-Transport-Security | MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security) ,  [HTTP Strict Transport Security Cheat Sheet | OWASP](https://www.owasp.org/index.php/HTTP_Strict_Transport_Security_Cheat_Sheet) 
+**Resources:**  [Strict-Transport-Security | MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security) ,  [HTTP Strict Transport Security Cheat Sheet | OWASP](https://www.owasp.org/index.php/HTTP_Strict_Transport_Security_Cheat_Sheet)
 
 ### ReferrerPolicy()  
 
@@ -372,7 +374,7 @@ let policy = HSTS()
 
 **Directives:**, noReferrer(), noReferrerWhenDowngrade(), origin(), originWhenCrossOrigin(), sameOrigin(), strictOrigin(), strictOriginWhenCrossOrigin(), unsafeUrl()
 
-***Resources:**   [A new security header: Referrer Policy | Scott Helme](https://scotthelme.co.uk/a-new-security-header-referrer-policy/) ,  [Referrer-Policy | MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy) 
+**Resources:**   [A new security header: Referrer Policy | Scott Helme](https://scotthelme.co.uk/a-new-security-header-referrer-policy/) ,  [Referrer-Policy | MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy) 
 
 ### XCTO()  
 
