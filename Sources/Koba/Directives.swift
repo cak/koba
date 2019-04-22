@@ -401,7 +401,7 @@ public class HSTS {
     }
 
     public func `default`() -> HSTS {
-        directives.append("max-age=63072000; includeSubdomains")
+        directives.append("max-age=86400; includeSubDomains")
         return self
     }
 
