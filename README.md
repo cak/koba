@@ -57,7 +57,7 @@ Enable browser cross-site scripting filters
 **Add to dependencies**
 
 ```swift
-.package(url: "https://github.com/cak/koba", from: "0.1.0"),
+.package(url: "https://github.com/cak/koba", from: "0.2.0"),
 ```
 
 **Add to target dependencies**
