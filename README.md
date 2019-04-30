@@ -93,7 +93,7 @@ X-XSS-Protection: 1; mode=block
 Referrer-Policy: no-referrer, strict-origin-when-cross-origin
 X-Frame-Options: SAMEORIGIN
 Cache-control: no-cache, no-store, must-revalidate, max-age=0
-Strict-Transport-Security: max-age=63072000; includeSubdomains
+Strict-Transport-Security: max-age=86400; includeSubDomains
 ```
 
 ### Options
@@ -152,7 +152,7 @@ Referrer-Policy: no-referrer
 Strict-Transport-Security: includeSubDomains; preload; max-age=604800
 Cache-control: no-store, must-revalidate, proxy-revalidate
 Expect-CT: max-age=300; enforce
-X-XSS-Protection: 1 mode=block
+X-XSS-Protection: 1; mode=block
 Content-Security-Policy: default-src 'none'; block-all-mixed-content; connect-src 'self' api.swiftserver.dev
 Feature-Policy: geolocation 'self' swiftserver.dev; vibrate 'none'
 X-Frame-Options: DENY

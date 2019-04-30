@@ -566,7 +566,7 @@ public class XXP {
     }
 
     public func enabledBlock() -> XXP {
-        directive = "1 mode=block"
+        directive = "1; mode=block"
         return self
     }
 
