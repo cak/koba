@@ -45,7 +45,7 @@ extension Koba {
         public static let strictDynamic = "'strict-dynamic'"
         public static let unsafeEval = "'unsafe-eval'"
         public static let unsafeInline = "'unsafe-inline'"
-        public static let script = "'script"
+        public static let script = "'script'"
         public static let wildcard = "*"
     }
 
