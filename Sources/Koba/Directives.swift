@@ -190,6 +190,7 @@ public class CSP {
 
     public func requireTrustedTypesFor(_ values: String...) -> CSP {
         directives.append("require-trusted-types-for \(values.joined(separator: " "))")
+        return self
     }
 
     public func reportTo(_ reportTo: ReportTo...) -> CSP {
