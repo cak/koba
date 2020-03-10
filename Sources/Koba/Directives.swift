@@ -188,6 +188,11 @@ public class CSP {
         return self
     }
 
+    public func requireTrustedTypesFor(_ values: String...) -> CSP {
+        directives.append("require-trusted-types-for \(values.joined(separator: " "))")
+        return self
+    }
+
     public func reportTo(_ reportTo: ReportTo...) -> CSP {
         var reporting: [String] = []
         _ = reportTo.map { report in
